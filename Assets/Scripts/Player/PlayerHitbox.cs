@@ -26,7 +26,6 @@ namespace Player
             
             _lastTick[other] = now;
 
-            // allow rules/modifiers to tweak damage here
             _playerHealth.ApplyIncomingDamage(src.damage, src.type, src.knockback);
         }
 

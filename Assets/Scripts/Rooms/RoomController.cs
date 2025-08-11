@@ -12,14 +12,16 @@ public class RoomController : MonoBehaviour
     public RulesUI rulesUI;
     public Room[] rooms;              
     public Transform player;          
-    public DefianceManager defiance;  
+   public string outroSceneName = "OutroScene";
+
 
     [Header("Run Settings")]
     public int startingRevives = 3;
     public float transitionLock = 0.25f;
 
     // runtime
-    private EnemySpawner enemySpawner;
+    private EnemySpawner _enemySpawner;
+    private DefianceManager _defiance;  
     private Room currentRoom;
     private int currentIndex = -1;
     private int alive = 0;
@@ -30,30 +32,30 @@ public class RoomController : MonoBehaviour
 
     void Awake()
     {
-        if (!defiance) defiance = FindFirstObjectByType<DefianceManager>();
+        if (!_defiance) _defiance = FindFirstObjectByType<DefianceManager>();
     }
 
     void OnEnable()
     {
-        if (defiance)
+        if (_defiance)
         {
-            defiance.onPlayerRevive.AddListener(OnPlayerRevive);
-            defiance.onOutOfRevives.AddListener(OnOutOfRevives);
+            _defiance.onPlayerRevive.AddListener(OnPlayerRevive);
+            _defiance.onOutOfRevives.AddListener(OnOutOfRevives);
         }
     }
 
     void OnDisable()
     {
-        if (defiance)
+        if (_defiance)
         {
-            defiance.onPlayerRevive.RemoveListener(OnPlayerRevive);
-            defiance.onOutOfRevives.RemoveListener(OnOutOfRevives);
+            _defiance.onPlayerRevive.RemoveListener(OnPlayerRevive);
+            _defiance.onOutOfRevives.RemoveListener(OnOutOfRevives);
         }
     }
 
     void Start()
     {
-        if (defiance) defiance.revivesLeft = startingRevives;
+        if (_defiance) _defiance.revivesLeft = startingRevives;
         GoToRoom(0);
     }
 
@@ -72,8 +74,7 @@ public class RoomController : MonoBehaviour
        
         if (targetIndex >= rooms.Length)
         {
-            Debug.Log("RUN COMPLETE");
-            transitioning = false;
+            SceneManager.LoadScene(outroSceneName);
             return;
         }
         if (targetIndex < 0) targetIndex = 0;
@@ -96,10 +97,7 @@ public class RoomController : MonoBehaviour
         }
 
        
-        enemySpawner = currentRoom.GetComponentInChildren<EnemySpawner>(true);
-        if (enemySpawner != null && (enemySpawner.spawnPoints == null || enemySpawner.spawnPoints.Length == 0))
-            enemySpawner.spawnPoints = currentRoom.enemySpawns;
-
+        
         
         if (currentRoom.kind == RoomKind.Combat || currentRoom.kind == RoomKind.Boss)
         {
@@ -137,10 +135,10 @@ public class RoomController : MonoBehaviour
 
         spawned.Clear();
         alive = 0;
-
-        if (enemySpawner != null)
+        _enemySpawner = currentRoom.GetComponentInChildren<EnemySpawner>(true);
+        if (_enemySpawner != null)
         {
-            foreach (var e in enemySpawner.SpawnAll())
+            foreach (var e in _enemySpawner.SpawnAll())
             {
                 if (!e) continue;
                 spawned.Add(e);

@@ -29,7 +29,6 @@ public class Bullet : MonoBehaviour
         var hp = other.GetComponent<Health>();
         if (hp != null) hp.TakeDamage(damage);
         
-        //need to change later to specific layers
         Destroy(gameObject);
     }
 }

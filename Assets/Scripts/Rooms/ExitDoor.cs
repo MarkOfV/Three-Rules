@@ -9,7 +9,6 @@ public class ExitDoor : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {   
-        Debug.Log("ExitDoor triggered by: " + other.name);
         if (!controller) return;
         if (!other.CompareTag("Player")) return;
         controller.GoNextRoom();

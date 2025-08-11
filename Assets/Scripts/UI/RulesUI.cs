@@ -16,7 +16,6 @@ namespace UI
             var foundLabels = GetComponentsInChildren<TMPro.TMP_Text>(true);
             if (foundLabels.Length < 3)
             {
-                Debug.LogError($"[RulesUI] Could not find 3 TMP_Text components in children of {gameObject.name}.");
                 enabled = false;
                 return;
             }

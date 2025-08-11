@@ -21,8 +21,8 @@ public class DefianceManager : MonoBehaviour
         if (revivesLeft > 0)
         {
             revivesLeft--;
-            player.Revive();          // do the state change here
-            onPlayerRevive?.Invoke(); // then notify world
+            player.Revive();          
+            onPlayerRevive?.Invoke(); 
             return true;
         }
 

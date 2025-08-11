@@ -17,7 +17,6 @@ namespace Player
         {
             _coolDown -= Time.deltaTime;
 
-            // Aim toward mouse (rotate player or just firePoint direction)
             var mouse = _cam.ScreenToWorldPoint(Input.mousePosition);
             Vector2 aimDir = (mouse - firePoint.position);
             var angle = Mathf.Atan2(aimDir.y, aimDir.x) * Mathf.Rad2Deg;

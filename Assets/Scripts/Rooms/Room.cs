@@ -7,8 +7,8 @@ namespace Rooms
     {
         public Transform playerSpawn;
         public Transform[] enemySpawns;
-        public GameObject hazardsParent;         // can be null
+        public GameObject hazardsParent;        
         public Collider2D exitTrigger;
-        public RoomKind kind;          // optional; disabled at start
+        public RoomKind kind;
     }
 }

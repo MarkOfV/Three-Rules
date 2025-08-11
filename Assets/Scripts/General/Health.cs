@@ -41,6 +41,6 @@ public class Health : MonoBehaviour
     protected virtual void Die()
     {
         onDeath?.Invoke();
-        Destroy(gameObject); // default for non-player
+        Destroy(gameObject);
     }
 }
